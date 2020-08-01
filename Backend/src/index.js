@@ -30,9 +30,9 @@ app.use(cors());
 
 app.use(morgan('combined'));
 
-//retriver toutes les questions
+//renvoie toutes les questions
 
-app.get('/', (res, req) => {
+app.get('/', (req, res) => {
     const qs = questions.map(q => ({
         id: q.id,
         title: q.title,
@@ -44,7 +44,7 @@ app.get('/', (res, req) => {
 
 //recuperation de question specifique
 
-app.get('/:id', (res, req) => {
+app.get('/:id', (req, res) => {
     const question = questions.filter(q => (q.id === parseInt(req.params.id)));
     if(question.length > 1) return res.status(500).send();
     if(question.length === 0) return res.status(404).send();
@@ -53,7 +53,7 @@ app.get('/:id', (res, req) => {
 
 //insertion de nouvelle question
 
-app.post('/', (res, req) => {
+app.post('/', (req, res) => {
     const {title, description} = req.body;
     const newQuestion = {
         id: questions.length + 1,
@@ -67,7 +67,7 @@ app.post('/', (res, req) => {
 
 //insertion de nouvelle reponse
 
-app.post('/answer/:id', (res, req) => {
+app.post('/answer/:id', (req, res) => {
     const {answer} = req.body;
 
     //filtrage des questions par id
